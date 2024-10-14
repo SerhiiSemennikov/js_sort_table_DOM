@@ -15,14 +15,14 @@ headers.forEach((header) => {
 });
 
 function sortBy(headerIndex) {
-  arrayOf.sort((a, b) => {
+  arrayOf.sort((td1, td2) => {
     if (
       headers[headerIndex].innerHTML === 'Name' ||
       headers[headerIndex].innerHTML === 'Position'
     ) {
-      return text(a).localeCompare(text(b));
+      return text(td1).localeCompare(text(td2));
     } else {
-      return getNumber(text(a)) - getNumber(text(b));
+      return getNumber(text(td1)) - getNumber(text(td2));
     }
   });
 
