@@ -4,25 +4,27 @@ const headers = document.querySelectorAll('th');
 const tBody = document.querySelector('tBody');
 const rows = document.querySelectorAll('tBody tr');
 
-const arrayOf = [...rows];
+const array = [...rows];
 
 headers.forEach((header) => {
-  header.addEventListener('click', function () {
-    const headerIndex = event.target.cellIndex;
+  header.onclick = function (e) {
+    const index = e.target.cellIndex;
 
-    sortBy(headerIndex);
-  });
+    sortBy(array, index);
+  };
 });
 
-function sortBy(headerIndex) {
+function sortBy(arrayOf, index) {
   arrayOf.sort((td1, td2) => {
-    if (
-      headers[headerIndex].innerHTML === 'Name' ||
-      headers[headerIndex].innerHTML === 'Position'
-    ) {
-      return text(td1).localeCompare(text(td2));
+    if (index === 0 || index === 1) {
+      return td1.children[index].innerHTML.localeCompare(
+        td2.children[index].innerHTML,
+      );
     } else {
-      return getNumber(text(td1)) - getNumber(text(td2));
+      return (
+        getNumber(td1.children[index].innerHTML) -
+        getNumber(td2.children[index].innerHTML)
+      );
     }
   });
 
@@ -33,8 +35,4 @@ function sortBy(headerIndex) {
 
 function getNumber(elString) {
   return Number(elString.replace(',', '').replace('$', ''));
-}
-
-function text(x) {
-  return x.children[event.target.cellIndex].innerHTML;
 }
