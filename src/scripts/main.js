@@ -5,13 +5,14 @@ const tBody = document.querySelector('tBody');
 const rows = document.querySelectorAll('tBody tr');
 
 const array = [...rows];
+const copyArray = [...array];
 
 headers.forEach((header) => {
-  header.onclick = function (e) {
-    const index = e.target.cellIndex;
+  header.addEventListener('click', function (element) {
+    const index = element.target.cellIndex;
 
-    sortBy(array, index);
-  };
+    sortBy(copyArray, index);
+  });
 });
 
 function sortBy(arrayOf, index) {
@@ -22,8 +23,10 @@ function sortBy(arrayOf, index) {
       );
     } else {
       return (
-        getNumber(td1.children[index].innerHTML) -
-        getNumber(td2.children[index].innerHTML)
+        Number(
+          td1.children[index].innerHTML.replace(',', '').replace('$', ''),
+        ) -
+        Number(td2.children[index].innerHTML.replace(',', '').replace('$', ''))
       );
     }
   });
@@ -31,8 +34,4 @@ function sortBy(arrayOf, index) {
   arrayOf.forEach((tr) => {
     tBody.appendChild(tr);
   });
-}
-
-function getNumber(elString) {
-  return Number(elString.replace(',', '').replace('$', ''));
 }
